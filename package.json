@@ -15,7 +15,9 @@
     "reactify": "^0.17.1",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.2.1",
-    "uglifyify": "^3.0.1"
+    "uglifyify": "^3.0.1",
+    "react-time": "^2.3.0",
+    "underscore": "^1.7.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

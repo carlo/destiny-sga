@@ -1,3 +1,8 @@
+var React = require( 'react/addons' );
+var Timestamp = require( 'react-time' );
+var _ = require( 'underscore' );
+
+
 function unescapeHTML( inputString ) {
   var e = document.createElement( 'div' );
   e.innerHTML = inputString;
@@ -46,7 +51,6 @@ var List = React.createClass({
         // `this.state.elements` with an array of the same length, the view
         // isn't updated.  But when I hand a copy of the new array, all is well.
         // WTF?
-        console.log( this.state.elements.length );
         this.setState(
           {
             isLoading: false,
@@ -228,7 +232,7 @@ var ListElement = React.createClass({
           &nbsp;by&nbsp;
           <a href={ this.state.authorUrl }>{ this.state.authorName }</a>
           &nbsp;&middot;&nbsp;
-          { this.state.createdAt }
+          <Timestamp value={ this.state.createdAt } relative />
           &nbsp;&middot;&nbsp;
           Score: { this.state.score }
         </p>
