@@ -8,7 +8,6 @@ function unescapeHTML( inputString ) {
 // ### Main list container
 var List = React.createClass({
   getInitialState: function() {
-    console.log( document.location.hash );
     return {
       elements: [],
       filter: document.location.hash.replace( /^#/, '' ) || 'new',
@@ -16,25 +15,62 @@ var List = React.createClass({
     };
   },
 
-  componentDidMount: function() {
+
+  componentWillMount: function() {
     this._fetchData();
   },
 
-  _fetchData: function() {
-    var self = this;
-    var cbNameMainData = 'cbMain' + Date.now();
-    var baseUrl = '//www.reddit.com/r/DestinyTheGame/search.json?q=title%3ASGA&restrict_sr=on&t=month&sort=' + this.state.filter;
-    var script = document.createElement( 'script' );
 
+  // ### _fetchData()
+  //
+  // Load data from Reddit API or get a cached copy from localStorage.  If a
+  // successful API call was made, the returned object is stored locally for
+  // 30 minutes.  The method will check whether the cached copy is still fresh
+  // or not and return data accordingly.
+  _fetchData: function() {
+    var cacheKey = this.state.filter + '-cached';
+    var cachedData = window.localStorage && window.localStorage.getItem( cacheKey );
+    var storedObject;
+    var self = this;
+    var cbNameMainData;
+    var script;
+
+    // Do we have fresh data in the localstorage?  If yes, get it and forget
+    // about the network call.
+    if ( cachedData ) {
+      storedObject = JSON.parse( cachedData );
+
+      // Is the cached data fresher than 30 minutes?
+      if ( storedObject.storedAt > ( _.now() - 1800000 ) ) {
+        // Okay, this smells like bullshit territory.  When trying to update
+        // `this.state.elements` with an array of the same length, the view
+        // isn't updated.  But when I hand a copy of the new array, all is well.
+        // WTF?
+        console.log( this.state.elements.length );
+        this.setState(
+          {
+            isLoading: false,
+            elements: this.state.elements.length ? [] : storedObject.redditData
+          },
+          function() {
+            self.setState({
+              elements: storedObject.redditData
+            });
+          }
+        );
+
+        return;
+      }
+    }
+
+    // Tell the app we're getting new data now.
     this.setState({
       elements: [],
       isLoading: true
     });
 
-    // DUMMY DATA
-    // url = '/fixtures/search.json?';
-    // var cbNameMainData = 'cbMain' + 12345;
-    // DUMMY DATA
+    // Create the callback function name for the JSONP script call.
+    cbNameMainData = 'cbMain' + Date.now();
 
     // Create callback for the JSONP call.
     window[ cbNameMainData ] = function( jsonData ) {
@@ -43,18 +79,35 @@ var List = React.createClass({
         elements: jsonData.data.children
       });
 
-      // Clean up afterwards.
+      // Store data in localstorage to reduce subsequent Reddit API calls.
+      if ( window.localStorage ) {
+        localStorage.setItem(
+          cacheKey,
+          JSON.stringify({
+            redditData: jsonData.data.children,
+            storedAt: _.now()
+          })
+        );
+      }
+
+      // Clean up.
       delete window[ cbNameMainData ];
     };
 
-    // Get main data file.
-    script.src = baseUrl + '&jsonp=' + cbNameMainData;
+    // Get data from Reddit.
+    script = document.createElement( 'script' );
+    script.src = '//www.reddit.com/r/DestinyTheGame/search.json?q=title%3ASGA&restrict_sr=on&t=month&sort=' + this.state.filter + '&jsonp=' + cbNameMainData;
     document.head.appendChild( script );
   },
 
+
+  // ### _show()
+  // Display a different list.  Used by `onClick`.
   _show: function( newFilter, evt ) {
-    if ( this.state.isLoading ) {
-      evt.preventDefault();
+    if ( this.state.isLoading || this.state.filter === newFilter) {
+      if ( evt ) {
+        evt.preventDefault();
+      }
       return;
     }
 
@@ -64,18 +117,27 @@ var List = React.createClass({
     );
   },
 
+
+  // ### _getClassesSelector()
+  //
+  // Returns the applicable CSS classes for the links in the `Selector` element.
   _getClassesSelector: function( filter ) {
     return React.addons.classSet({
       'is-active': this.state.filter === filter
     });
   },
 
+
+  // ### _getClassesLoading()
+  //
+  // Returns the applicable CSS classes for the loading indicator element.
   _getClassesLoading: function() {
     return React.addons.classSet({
       'List-loadingIndicator': true,
       'is-visible': this.state.isLoading
     });
   },
+
 
   render: function() {
     var self = this;
