@@ -1,0 +1,256 @@
+body {
+  background-color: #607876;
+}
+
+body {
+  background: url( "/img/bg.jpg" ) 50% 0 fixed no-repeat;
+  color: rgba( 254, 254, 254, 0.7 );
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1.8em; /* currently ems cause chrome bug misinterpreting rems on body element */
+  line-height: 1.4;
+  text-shadow: 1px 1px 1px rgba( 30, 30, 30, 0.2 );
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+h2 {
+  color: rgba( 254, 254, 254, 0.7 );
+  font-size: 2.4rem;
+  letter-spacing: -0.04rem;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+hr {
+  border-top: 0.43rem solid rgba( 198, 206, 204, 0.5 );
+}
+
+a {
+  color: #fff;
+}
+
+a:hover,
+a:active,
+a:visited {
+  color: #eee;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+
+.is-visible {
+  display: block !important;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+
+.PageHeader {
+  margin-top: 5.2rem;
+}
+
+.PageHeader-backdrop {
+  background-color: rgba( 98, 86, 36, 0.4 );
+  border-bottom: 0.64rem solid rgba( 152, 130, 55, 0.75 );
+  height: 4.65rem;
+  margin-bottom: -7.4rem;
+}
+
+.PageHeader-img {
+  border: 0.22rem solid #fff;
+  float: left;
+  height: 6.44rem;
+  margin-top: 0.7rem;
+  width: 6.44rem;
+}
+
+.PageHeader-title {
+  color: #fefefe;
+  font-size: 5.3rem;
+  font-weight: 500;
+  line-height: 1;
+  margin-left: 8.4rem;
+  text-transform: uppercase;
+  margin-bottom: 2.42rem;
+}
+
+.PageHeader-subtitle {
+  color: rgba( 254, 254, 254, 0.7 );
+  display: block;
+  font-size: 2.4rem;
+  font-weight: normal;
+  letter-spacing: -0.04rem;
+  line-height: 1;
+  margin-top: 0.1rem;
+  text-transform: uppercase;
+}
+
+.PageHeader-tagline {
+  font-style: italic;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+
+.Description {
+  border-bottom: 0.43rem solid rgba( 198, 206, 204, 0.5 );
+}
+
+.Description p:last-child {
+  margin-bottom: 1rem;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+
+.Selector {
+  margin-top: 6rem;
+}
+
+.Selector p {
+  border-top: 0.2rem solid rgba( 245, 245, 245, 0.7 );
+  letter-spacing: 0.2rem;
+  margin-top: 1rem;
+  text-transform: uppercase;
+}
+
+.Selector a {
+  display: inline-block;
+  line-height: 3.3rem;
+  margin: 0;
+  padding: 0 2rem;
+  text-decoration: none;
+  color: rgba( 255, 255, 255, 0.3 );
+}
+
+.Selector a.is-active {
+  background-color: rgba( 245, 245, 245, 0.25 );
+  color: rgba( 255, 255, 255, 1 );
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+
+.Advice {
+  border: 1px solid rgba( 50, 50, 50, 0.05 );
+  margin: 0 0 0.5rem 0;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  height: 15rem;
+}
+
+.Advice__expanded {
+  height: auto;
+}
+
+.Advice-title {
+  border-bottom: 3px solid rgba( 198, 206, 204, 0.5 );
+  font-size: 2.1rem;
+  font-weight: 600;
+  letter-spacing: -0.04rem;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.Advice-title a {
+  color: rgba( 254, 254, 254, 0.7 );
+  text-decoration: none;
+}
+
+.Advice-title a:active,
+.Advice-title a:hover {
+  color: #3e7bb2;
+}
+
+.Advice-score {
+  background-color: #748b9b;
+  bottom: -1.25rem;
+  color: rgba( 254, 254, 254, 0.5 );
+  display: block;
+  font-family: Tahoma, Verdana, Helvetica, Arial, sans-serif;
+  font-size: 1.8rem;
+  padding-left: 0.75rem;
+  position: absolute;
+  right: 0;
+}
+
+.Advice-meta {
+  display: none;
+}
+
+.Advice-body {
+  color: rgba( 254, 254, 254, 0.2 );
+}
+
+.Advice-body .md p:last-child {
+  margin-bottom: 0;
+}
+
+.Advice__expanded .Advice-body {
+  color: rgba( 254, 254, 254, 0.7 );
+}
+
+.Advice-cornerNW,
+.Advice-cornerNE,
+.Advice-cornerSW,
+.Advice-cornerSE {
+  color: rgba( 50, 50, 50, 0.2 );
+  font-size: 3rem;
+  line-height: 1;
+  position: absolute;
+}
+
+.Advice-cornerNW {
+  left: -1.1rem;
+  top: -1.4rem;
+}
+
+.Advice-cornerNE {
+  right: -1.1rem;
+  top: -1.4rem;
+}
+
+.Advice-cornerSW {
+  bottom: -1.6rem;
+  left: -1.1rem;
+}
+
+.Advice-cornerSE {
+  bottom: -1.6rem;
+  right: -1.1rem;
+}
+
+.Advice-toggle {
+  bottom: 0.5rem;
+  color: rgba( 50, 50, 50, 0.2 );
+  cursor: pointer;
+  display: block;
+  font-size: 3rem;
+  font-weight: bold;
+  right: 1.5rem;
+  position: absolute;
+  text-align: center;
+}
+
+
+/* -------------------------------------------------------------------------- */
+
+#content {
+
+}
