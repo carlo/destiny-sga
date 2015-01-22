@@ -10,11 +10,11 @@ var List = React.createClass({
   componentDidMount: function() {
 
     // DUMMY DATA
-    // this.props.url = '/fixtures/search.json?';
-    // var cbNameMainData = 'cbMain' + 12345;
+    this.props.url = '/fixtures/search.json?';
+    var cbNameMainData = 'cbMain' + 12345;
     // DUMMY DATA
 
-    var cbNameMainData = 'cbMain' + Date.now();
+    // var cbNameMainData = 'cbMain' + Date.now();
     var _this = this;
     var script;
 
@@ -62,9 +62,10 @@ var ListElement = React.createClass({
     return {
       authorName: '/u/' + this.props.data.author,
       authorUrl: 'https://reddit.com/u/' + this.props.data.author,
-      title: this.props.data.title.replace( /^\[?SGA\]?[:\,]?\s*/, '' ),
+      title: this.props.data.title.replace( /^\[?SGA\]?[:\,]?\s*/, ' ' ),
       url: this.props.data.url.replace( /^http:/, 'https:' ),
       body: unescapeHTML( this.props.data.selftext_html ),
+      excerpt: this.props.data.selftext.substr( 0, 120 ).replace( /\w+$/, '…' ),
       createdAt: new Date( this.props.data.created_utc * 1000 ).toGMTString(),
       score: this.props.data.score,
       isExpanded: false
@@ -75,13 +76,6 @@ var ListElement = React.createClass({
     return React.addons.classSet({
       'Advice': true,
       'Advice__expanded': this.state.isExpanded
-    });
-  },
-
-  _getClassesMeta: function() {
-    return React.addons.classSet({
-      'Advice-meta': true,
-      'is-visible': this.state.isExpanded
     });
   },
 
@@ -100,23 +94,25 @@ var ListElement = React.createClass({
   render: function() {
     return (
       <section className={ this._getClassesMain() }>
-        <span className="Advice-cornerNW">&lceil;</span>
-        <span className="Advice-cornerNE">&rceil;</span>
-        <span className="Advice-cornerSW">&lfloor;</span>
-        <span className="Advice-cornerSE">&rfloor;</span>
+
         <h3 className="Advice-title">
           <a href={ this.state.url } onClick={ this._toggleBody }>{ this.state.title }</a>
-          <span className="Advice-score" title="Reddit score">{ this.state.score }</span>
         </h3>
-        <p className={ this._getClassesMeta() }>
+        <p className="Advice-excerpt" onClick={ this._toggleBody }>
+          <span className="Advice-toggle" onClick={ this._toggleBody }>…</span>
+          { this.state.excerpt }
+        </p>
+        <p className="Advice-meta">
+          &rarr;&nbsp;
           <a href={ this.state.url }>SGA on /r/destinythegame</a>
           &nbsp;by&nbsp;
           <a href={ this.state.authorUrl }>{ this.state.authorName }</a>
           &nbsp;&middot;&nbsp;
           { this.state.createdAt }
+          &nbsp;&middot;&nbsp;
+          Score: { this.state.score }
         </p>
         <div className="Advice-body" dangerouslySetInnerHTML={{ __html: this.state.body }} />
-        <div className="Advice-toggle" onClick={ this._toggleBody }>{ this.state.isExpanded ? '∧' : '∨' }</div>
       </section>
     )
   }

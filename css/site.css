@@ -147,105 +147,75 @@ a:visited {
 /* -------------------------------------------------------------------------- */
 
 .Advice {
-  border: 1px solid rgba( 50, 50, 50, 0.05 );
-  margin: 0 0 0.5rem 0;
-  padding: 1.5rem;
-  position: relative;
+  border-bottom: 1px solid rgba( 255, 255, 255, 0.05 );
+  color: rgba( 245, 245, 245, 1 );
+  margin-bottom: 2rem;
   overflow: hidden;
-  height: 15rem;
+  padding: 0.75rem;
+  position: relative;
 }
 
 .Advice__expanded {
+  background-color: rgba( 50, 50, 50, 0.3 );
   height: auto;
 }
 
 .Advice-title {
-  border-bottom: 3px solid rgba( 198, 206, 204, 0.5 );
   font-size: 2.1rem;
-  font-weight: 600;
-  letter-spacing: -0.04rem;
-  position: relative;
-  text-transform: uppercase;
+  font-weight: normal;
+  letter-spacing: -0.03rem;
+  margin-bottom: 0;
+  text-transform: capitalize;
 }
 
 .Advice-title a {
-  color: rgba( 254, 254, 254, 0.7 );
+  color: rgba( 245, 245, 245, 1 );
   text-decoration: none;
 }
 
 .Advice-title a:active,
 .Advice-title a:hover {
-  color: #3e7bb2;
+  text-decoration: underline;
 }
 
-.Advice-score {
-  background-color: #748b9b;
-  bottom: -1.25rem;
-  color: rgba( 254, 254, 254, 0.5 );
-  display: block;
-  font-family: Tahoma, Verdana, Helvetica, Arial, sans-serif;
-  font-size: 1.8rem;
-  padding-left: 0.75rem;
-  position: absolute;
-  right: 0;
+.Advice-toggle {
+  cursor: pointer;
+  float: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.Advice-excerpt {
+  color: rgba( 245, 245, 245, 0.8 );
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  overflow: hidden;
 }
 
 .Advice-meta {
   display: none;
+  font-size: 1.5rem;
 }
 
 .Advice-body {
-  color: rgba( 254, 254, 254, 0.2 );
+  display: none;
 }
 
 .Advice-body .md p:last-child {
   margin-bottom: 0;
 }
 
+.Advice__expanded .Advice-title {
+  margin-bottom: 2rem;
+}
+
+.Advice__expanded .Advice-excerpt {
+  display: none;
+}
+
+.Advice__expanded .Advice-meta,
 .Advice__expanded .Advice-body {
-  color: rgba( 254, 254, 254, 0.7 );
-}
-
-.Advice-cornerNW,
-.Advice-cornerNE,
-.Advice-cornerSW,
-.Advice-cornerSE {
-  color: rgba( 50, 50, 50, 0.2 );
-  font-size: 3rem;
-  line-height: 1;
-  position: absolute;
-}
-
-.Advice-cornerNW {
-  left: -1.1rem;
-  top: -1.4rem;
-}
-
-.Advice-cornerNE {
-  right: -1.1rem;
-  top: -1.4rem;
-}
-
-.Advice-cornerSW {
-  bottom: -1.6rem;
-  left: -1.1rem;
-}
-
-.Advice-cornerSE {
-  bottom: -1.6rem;
-  right: -1.1rem;
-}
-
-.Advice-toggle {
-  bottom: 0.5rem;
-  color: rgba( 50, 50, 50, 0.2 );
-  cursor: pointer;
   display: block;
-  font-size: 3rem;
-  font-weight: bold;
-  right: 1.5rem;
-  position: absolute;
-  text-align: center;
 }
 
 
