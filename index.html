@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="/css/normalize.css">
   <link rel="stylesheet" href="/css/site.css">
+  <script> !function(g,s,q,r,d){r=g[r]=g[r]||function(){(r.q=r.q||[]).push(arguments)};d=s.createElement(q);q=s.getElementsByTagName(q)[0];d.src='//d1l6p2sc9645hc.cloudfront.net/tracker.js';q.parentNode.insertBefore(d,q)}(window,document,'script','_gs');_gs('GSN-974367-B'); </script>
 </head>
 
 <body>
@@ -43,40 +44,29 @@
   </div>
 
   <div class="Block">
-    <div class="Block-inner">
-      <div class="Selector">
-        <p>
-          Filter
-          <a href="#">Newest</a>
-          <a href="#" class="is-active">Best this month</a>
-          <a href="#">Best this week</a>
-        </p>
-      </div>
-    </div>
+    <div class="Block-inner" id="content"></div>
   </div>
-
-  <div class="Block">
-    <div class="Block-inner" id="content">
-    </div>
-  </div>
-
 
   <footer class="Block PageFooter">
     <div class="Block-inner">
-      This is a hobby project by
-      <a href="mailto:carlo@zottmann.org">Carlo Zottmann</a>
-      and is neither associated with or endorsed by Bungie or Reddit.
-      All information used on this site is property of Reddit, Reddit users
-      or Bungie.
-
-      Contact me via <a href="mailto:carlo@zottmann.org">email</a>,
-      <a href="https://reddit.com/u/czottmann">Reddit</a> or
-      <a href="https://twitter.com/municode">Twitter</a>.
+      <p>
+        This is a hobby project by
+        <a href="mailto:carlo@zottmann.org">Carlo Zottmann</a>
+        and is neither associated with or endorsed by Bungie or Reddit.
+        All information used on this site is property of Reddit, Reddit users
+        or Bungie.
+      </p>
+      <p>
+        Contact me via <a href="mailto:carlo@zottmann.org">email</a>,
+        <a href="https://reddit.com/u/czottmann">Reddit</a> or
+        <a href="https://twitter.com/municode">Twitter</a>.
+      </p>
     </div>
   </footer>
 
   <script src="/vendor/es5-shim.min.js"></script>
   <script src="/vendor/es5-sham.min.js"></script>
+  <script src="/vendor/underscore.min.js"></script>
   <script src="/vendor/react-with-addons-0.12.2.min.js"></script>
   <script src="/build/main.js"></script>
 

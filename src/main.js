@@ -7,20 +7,39 @@ function unescapeHTML( inputString ) {
 
 // ### Main list container
 var List = React.createClass({
+  getInitialState: function() {
+    console.log( document.location.hash );
+    return {
+      elements: [],
+      filter: document.location.hash.replace( /^#/, '' ) || 'new',
+      isLoading: false
+    };
+  },
+
   componentDidMount: function() {
+    this._fetchData();
+  },
+
+  _fetchData: function() {
+    var self = this;
+    var cbNameMainData = 'cbMain' + Date.now();
+    var baseUrl = '//www.reddit.com/r/DestinyTheGame/search.json?q=title%3ASGA&restrict_sr=on&t=month&sort=' + this.state.filter;
+    var script = document.createElement( 'script' );
+
+    this.setState({
+      elements: [],
+      isLoading: true
+    });
 
     // DUMMY DATA
-    this.props.url = '/fixtures/search.json?';
-    var cbNameMainData = 'cbMain' + 12345;
+    // url = '/fixtures/search.json?';
+    // var cbNameMainData = 'cbMain' + 12345;
     // DUMMY DATA
-
-    // var cbNameMainData = 'cbMain' + Date.now();
-    var _this = this;
-    var script;
 
     // Create callback for the JSONP call.
     window[ cbNameMainData ] = function( jsonData ) {
-      _this.setState({
+      self.setState({
+        isLoading: false,
         elements: jsonData.data.children
       });
 
@@ -29,18 +48,52 @@ var List = React.createClass({
     };
 
     // Get main data file.
-    script = document.createElement( 'script' );
-    script.src = this.props.url + '&jsonp=' + cbNameMainData;
+    script.src = baseUrl + '&jsonp=' + cbNameMainData;
     document.head.appendChild( script );
   },
 
-  getInitialState: function() {
-    return {
-      elements: []
-    };
+  _show: function( newFilter, evt ) {
+    if ( this.state.isLoading ) {
+      evt.preventDefault();
+      return;
+    }
+
+    this.setState(
+      { filter: newFilter },
+      this._fetchData
+    );
+  },
+
+  _getClassesSelector: function( filter ) {
+    return React.addons.classSet({
+      'is-active': this.state.filter === filter
+    });
+  },
+
+  _getClassesLoading: function() {
+    return React.addons.classSet({
+      'List-loadingIndicator': true,
+      'is-visible': this.state.isLoading
+    });
   },
 
   render: function() {
+    var self = this;
+    var selectorStrings = {
+      'new': 'Newest',
+      'relevance': 'Relevant this month',
+      'hot': 'Hottest this month'
+    };
+
+    var selectorNodes = [ 'new', 'relevance', 'hot' ].map( function( type ) {
+      var typeString = type;
+      return (
+        <a href={ '#' + type }
+          className={ self._getClassesSelector( type ) }
+          onClick={ _( self._show ).partial( type ) }>{ selectorStrings[ typeString] }</a>
+      );
+    });
+
     var listElementNodes = this.state.elements.map( function( obj ) {
       return (
         <ListElement data={ obj.data } />
@@ -49,9 +102,20 @@ var List = React.createClass({
 
     return (
       <div>
+        <div className="Selector">
+          <p>
+            <span>Show</span>
+            { selectorNodes }
+          </p>
+        </div>
+        <div className={ this._getClassesLoading() }>
+          Pondering…
+          &nbsp;
+          <img src="/img/loading.gif" alt="Loading indicator" />
+        </div>
         { listElementNodes }
       </div>
-    )
+    );
   }
 });
 
@@ -72,17 +136,10 @@ var ListElement = React.createClass({
     };
   },
 
-  _getClassesMain: function() {
+  _getClassesSection: function() {
     return React.addons.classSet({
       'Advice': true,
       'Advice__expanded': this.state.isExpanded
-    });
-  },
-
-  _getClassesToggle: function() {
-    return React.addons.classSet({
-      'Advice-toggle': true,
-      'is-hidden': this.state.isExpanded
     });
   },
 
@@ -93,15 +150,16 @@ var ListElement = React.createClass({
 
   render: function() {
     return (
-      <section className={ this._getClassesMain() }>
-
+      <section className={ this._getClassesSection() }>
         <h3 className="Advice-title">
           <a href={ this.state.url } onClick={ this._toggleBody }>{ this.state.title }</a>
         </h3>
+
         <p className="Advice-excerpt" onClick={ this._toggleBody }>
           <span className="Advice-toggle" onClick={ this._toggleBody }>…</span>
           { this.state.excerpt }
         </p>
+
         <p className="Advice-meta">
           &rarr;&nbsp;
           <a href={ this.state.url }>SGA on /r/destinythegame</a>
@@ -112,15 +170,16 @@ var ListElement = React.createClass({
           &nbsp;&middot;&nbsp;
           Score: { this.state.score }
         </p>
+
         <div className="Advice-body" dangerouslySetInnerHTML={{ __html: this.state.body }} />
       </section>
-    )
+    );
   }
 });
 
 
 // ### GO!
 React.render(
-  <List type="most-relevant-this-month" url='//www.reddit.com/r/DestinyTheGame/search.json?q=title%3ASGA&sort=relevance&restrict_sr=on&t=month' />,
+  <List/>,
   document.getElementById( 'content' )
 );

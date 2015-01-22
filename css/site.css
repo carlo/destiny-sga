@@ -64,6 +64,32 @@ a:visited {
 
 /* -------------------------------------------------------------------------- */
 
+.Block {
+  width: 100%;
+  float: left;
+  box-sizing: border-box;
+}
+
+.Block-inner {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 0 20px;
+  position: relative;
+  width: 100%;
+}
+
+.Block:after,
+.Block-inner:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+
 .PageHeader {
   border-bottom: 0.43rem solid rgba( 198, 206, 204, 0.5 );
   margin: 5.2rem 0 2.57rem 0;
@@ -114,10 +140,15 @@ a:visited {
 
 /* -------------------------------------------------------------------------- */
 
-.Description {
+.List-loadingIndicator {
+  display: none;
+  text-align: center;
 }
 
-.Description p:last-child {
+.List-loadingIndicator img {
+  height: 16px;
+  vertical-align: baseline;
+  width: 32px;
 }
 
 
@@ -135,13 +166,17 @@ a:visited {
   text-transform: uppercase;
 }
 
+.Selector span {
+  margin-right: 1rem;
+}
+
 .Selector a {
+  color: rgba( 255, 255, 255, 0.3 );
   display: inline-block;
   line-height: 3.3rem;
   margin: 0;
   padding: 0 2rem;
   text-decoration: none;
-  color: rgba( 255, 255, 255, 0.3 );
 }
 
 .Selector a.is-active {
@@ -226,12 +261,6 @@ a:visited {
 }
 
 
-/* -------------------------------------------------------------------------- */
-
-#content {
-
-}
-
 
 /* -------------------------------------------------------------------------- */
 
@@ -240,24 +269,10 @@ a:visited {
   padding: 2rem 0;
 }
 
-.Block {
-  width: 100%;
-  float: left;
-  box-sizing: border-box;
-}
 
-.Block-inner {
-  box-sizing: border-box;
-  margin: 0 auto;
-  max-width: 960px;
-  padding: 0 20px;
-  position: relative;
-  width: 100%;
-}
 
-.Block:after,
-.Block-inner:after {
-  clear: both;
-  content: "";
-  display: table;
+/* -------------------------------------------------------------------------- */
+
+#content {
+  min-height: 100rem;
 }
