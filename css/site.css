@@ -269,6 +269,10 @@ a:visited {
   padding: 2rem 0;
 }
 
+.PageFooter iframe {
+  vertical-align: top;
+  float: right;
+}
 
 
 /* -------------------------------------------------------------------------- */
