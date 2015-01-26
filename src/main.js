@@ -108,6 +108,9 @@ var List = React.createClass({
   // ### _show()
   // Display a different list.  Used by `onClick`.
   _show: function( newFilter, evt ) {
+    var newTrackingUrl = '/#' + newFilter,
+      newTrackingTitle = 'Show ' + newFilter;
+
     if ( this.state.isLoading || this.state.filter === newFilter) {
       if ( evt ) {
         evt.preventDefault();
@@ -119,6 +122,18 @@ var List = React.createClass({
       { filter: newFilter },
       this._fetchData
     );
+
+    // Tracking!
+    if ( _( window._gs ).isFunction() ) {
+      window._gs( 'track', newTrackingUrl, newTrackingTitle );
+    }
+
+    if ( _( window.ga ).isFunction() ) {
+      ga( 'send', 'pageview', {
+        'page': newTrackingUrl,
+        'title': newTrackingTitle
+      });
+    }
   },
 
 
