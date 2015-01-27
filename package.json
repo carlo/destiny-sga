@@ -17,10 +17,9 @@
     "underscore": "^1.7.0"
   },
   "scripts": {
-    "build": "npm run build-js-vendor && npm run build-jsx && npm run build-js-main",
-    "build-js-main": "browserify build/main.js | uglifyjs -mc > build/main.min.js",
+    "build": "npm run build-js-vendor && npm run build-js-main",
+    "build-js-main": "browserify -t reactify src/main.js | uglifyjs -mc > build/main.min.js",
     "build-js-vendor": "rm build/es5.min.js 2>&1; cat vendor/es5-shim.min.js vendor/es5-sham.min.js > build/es5.min.js",
-    "build-jsx": "jsx src/ build/",
 
     "start-dev": "npm run watch-jsx & python -m SimpleHTTPServer",
 
