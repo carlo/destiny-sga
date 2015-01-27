@@ -9,9 +9,6 @@
   },
   "devDependencies": {
     "browserify": "~8.1.1",
-    "gulp-concat": "^2.4.3",
-    "gulp-uglify": "^1.1.0",
-    "gulp": "^3.8.10",
     "reactify": "^0.17.1",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.2.1",
@@ -20,7 +17,14 @@
     "underscore": "^1.7.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npm run build-js-vendor && npm run build-jsx && npm run build-js-main",
+    "build-js-main": "browserify build/main.js | uglifyjs -mc > build/main.min.js",
+    "build-js-vendor": "rm build/es5.min.js 2>&1; cat vendor/es5-shim.min.js vendor/es5-sham.min.js > build/es5.min.js",
+    "build-jsx": "jsx src/ build/",
+
+    "start-dev": "npm run watch-jsx & python -m SimpleHTTPServer",
+
+    "watch-jsx": "jsx --watch src/ build/"
   },
   "author": "Carlo Zottmann <carlo@zottmann.org>",
   "license": "MIT"
